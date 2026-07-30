@@ -1,0 +1,11 @@
+services:
+  translate_service:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: translator_app
+    environment:
+      - GIGA_CHAT_AUTH_KEY=${GIGA_CHAT_AUTH_KEY}
+    ports:
+      - "8000:8000"
+    restart: unless-stopped
