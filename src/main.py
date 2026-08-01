@@ -7,4 +7,4 @@ app = FastAPI(title="Translation Service")
 app.include_router(main_router)
 
 if __name__ == "__main__":
-    uvicorn.run("src.main:app", reload=True, port=settings.app.port)
+    uvicorn.run("src.main:app", host=settings.app.host, port=settings.app.port, reload=True)

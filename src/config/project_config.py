@@ -16,6 +16,7 @@ class _GigaChatSettings(BaseSettings):
 
 class _AppSettings(BaseSettings):
     """ глобальные настройки проекта"""
+    host: str = "0.0.0.0"
     port: int = 8000
 
 
