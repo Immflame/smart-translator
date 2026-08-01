@@ -1,10 +1,11 @@
-from dotenv import load_dotenv
 from pydantic_settings import BaseSettings, SettingsConfigDict
+from dotenv import load_dotenv
 
 load_dotenv()
 
 
-class GigaChatSettings(BaseSettings):
+class _GigaChatSettings(BaseSettings):
+    """ настройки GigaChatAPI"""
     model_config = SettingsConfigDict(env_prefix="GIGA_CHAT_")
     auth_key: str
     model: str = "GigaChat-2-Max"
@@ -13,13 +14,15 @@ class GigaChatSettings(BaseSettings):
     max_tokens: int = 1024
 
 
-class AppSettings(BaseSettings):
+class _AppSettings(BaseSettings):
+    """ глобальные настройки проекта"""
     port: int = 8000
 
 
 class Settings(BaseSettings):
-    app: AppSettings = AppSettings()
-    gigachat: GigaChatSettings = GigaChatSettings()
+    """ все настройки в одном месте """
+    app: _AppSettings = _AppSettings()
+    gigachat: _GigaChatSettings = _GigaChatSettings()
 
 
 settings = Settings()

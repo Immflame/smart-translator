@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException, status
-from schemas import TranslateRequest, TranslateResponse
-from service import TranslationService
-from dependencies import get_translation_service
+from .schemas import TranslateRequest, TranslateResponse
+from .service import TranslationService
+from .dependencies import get_translation_service
 
 
 router = APIRouter(prefix="/translate", tags=["Перевод"])
@@ -12,6 +12,7 @@ async def translate_endpoint(
     request: TranslateRequest,
     service: TranslationService = Depends(get_translation_service)
 ):
+    """ принимает текст, код языка с которого перевести и код языка на который перевести и возвращает ответ"""
     try:
         result = await service.translate(
             text=request.content,

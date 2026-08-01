@@ -1,13 +1,15 @@
-from src.external.gigachat.client import GigaChatClient
-from constants import LANGUAGE_NAMES
-from exceptions import TranslationError
+from ..external.gigachat.client import GigaChatClient
+from .constants import LANGUAGE_NAMES
+from .exceptions import TranslationError
 
 
 class TranslationService:
+    """ сервис перевода """
     def __init__(self, gigachat_client: GigaChatClient):
         self.gigachat_client = gigachat_client
 
     def _get_system_prompt(self, source_lang: str, target_lang: str) -> str:
+        """ принимает коды языков и возвращает промпт"""
         source_name = LANGUAGE_NAMES.get(source_lang, source_lang)
         target_name = LANGUAGE_NAMES.get(target_lang, target_lang)
         return (
@@ -35,6 +37,7 @@ class TranslationService:
         )
 
     async def translate(self, text: str, source_lang: str, target_lang: str) -> str:
+        """ принимает текст, коды языков и возвращает переведенный текст """
         if not text or not text.strip():
             raise TranslationError("Текст не может быть пустым")
 

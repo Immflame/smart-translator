@@ -1,10 +1,11 @@
 import uuid
 import ssl
 import httpx
-from src.config.project_config import settings
+from ...config.project_config import settings
 
 
 class GigaChatClient:
+    """ клиент GigaChatAPI """
     def __init__(self):
         self.auth_key = settings.gigachat.auth_key
         self.model = settings.gigachat.model
@@ -17,6 +18,7 @@ class GigaChatClient:
         self.ssl_context.verify_mode = ssl.CERT_NONE
 
     async def _get_token(self, client: httpx.AsyncClient) -> str:
+        """ получает токен от GigaChatAPI """
         url = "https://ngw.devices.sberbank.ru:9443/api/v2/oauth"
         headers = {
             "Content-Type": "application/x-www-form-urlencoded",
@@ -30,6 +32,7 @@ class GigaChatClient:
         return response.json()["access_token"]
 
     async def chat_completion(self, messages: list[dict]) -> str:
+        """ отправляет сообщение и получает ответ """
         async with httpx.AsyncClient(verify=self.ssl_context, timeout=30.0) as client:
             token = await self._get_token(client)
             url = "https://api.giga.chat/v1/chat/completions"
